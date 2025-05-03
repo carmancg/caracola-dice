@@ -1,66 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Elegir Palabra Aleatoria</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Caracola Mágica</title>
   <style>
+    @font-face {
+      font-family: 'Spongeboy';
+      src: url('./fonts/SpongeboyMeBob.woff2') format('woff2'),
+           url('./fonts/SpongeboyMeBob.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      padding: 2em;
+      margin: 0;
+      padding: 0;
+      font-family: 'Spongeboy', sans-serif;
+      background-image: url('./img/bob caracola.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      backdrop-filter: brightness(0.85);
+    }
+
+    .contenedor {
+      background-color: rgba(0, 0, 0, 0.6);
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 20px;
       max-width: 500px;
-      margin: auto;
     }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
     input, button {
-      padding: 0.5em;
-      font-size: 1em;
-      width: 100%;
-      margin-top: 1em;
+      font-family: 'Spongeboy', sans-serif;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      margin: 0.5rem;
+      border: none;
+      border-radius: 10px;
     }
+
+    input {
+      width: 80%;
+    }
+
+    button {
+      background-color: purple;
+      color: white;
+      cursor: pointer;
+    }
+
     #resultado {
-      margin-top: 1.5em;
-      font-weight: bold;
-      font-size: 1.2em;
+      margin-top: 1rem;
+      font-size: 1.5rem;
     }
   </style>
 </head>
 <body>
-
-  <h2>La caracola mágica</h2>
-  <input type="text" id="entrada" placeholder="Ej: garnachas, pizza, buffet">
-  <button onclick="enviar()">¿Qué debemos elegir, caracola?</button>
-
-  <div id="resultado"></div>
+  <div class="contenedor">
+    <h1>La Caracola Mágica</h1>
+    <p>Escribe varias palabras separadas por coma y pregunta a la Caracola 🐚</p>
+    <input type="text" id="entrada" placeholder="ej: sí, no, tal vez" />
+    <br />
+    <button onclick="consultar()">Preguntar</button>
+    <div id="resultado"></div>
+  </div>
 
   <script>
-    async function enviar() {
-      const entrada = document.getElementById('entrada').value;
-      const palabras = entrada.split(',').map(p => p.trim()).filter(p => p);
-      const resultadoDiv = document.getElementById('resultado');
+    async function consultar() {
+      const entrada = document.getElementById("entrada").value;
+      const palabras = entrada.split(",").map(p => p.trim()).filter(Boolean);
 
-      if (palabras.length === 0) {
-        resultadoDiv.textContent = "Escribe al menos una opcion.";
+      if (palabras.length < 2) {
+        document.getElementById("resultado").innerText = "¡Escribe al menos dos opciones!";
         return;
       }
 
-      try {
-        const respuesta = await fetch("https://la-caracola-dice.onrender.com/elegir", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ palabras })
-        });
+      const response = await fetch("https://TU-URL-RENDER/elegir", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ palabras })
+      });
 
-        if (!respuesta.ok) {
-          resultadoDiv.textContent = "Error al contactar la API.";
-          return;
-        }
-
-        const data = await respuesta.json();
-        resultadoDiv.textContent = `La caracola dice: ${data.palabra_elegida}`;
-      } catch (error) {
-        resultadoDiv.textContent = "Error al enviar datos.";
+      if (response.ok) {
+        const data = await response.json();
+        document.getElementById("resultado").innerText = "🔮 " + data.palabra_elegida;
+      } else {
+        document.getElementById("resultado").innerText = "Error al consultar a la Caracola.";
       }
     }
   </script>
-
 </body>
 </html>
