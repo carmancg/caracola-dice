@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Elegir Palabra Aleatoria</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2em;
+      max-width: 500px;
+      margin: auto;
+    }
+    input, button {
+      padding: 0.5em;
+      font-size: 1em;
+      width: 100%;
+      margin-top: 1em;
+    }
+    #resultado {
+      margin-top: 1.5em;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Pregúntale a la caracola</h2>
+  <input type="text" id="entrada" placeholder="Ej: garnachas, pizza, buffet">
+  <button onclick="enviar()">La caracola dice</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    async function enviar() {
+      const entrada = document.getElementById('entrada').value;
+      const palabras = entrada.split(',').map(p => p.trim()).filter(p => p);
+      const resultadoDiv = document.getElementById('resultado');
+
+      if (palabras.length === 0) {
+        resultadoDiv.textContent = "Escribe al menos una opcion.";
+        return;
+      }
+
+      try {
+        const respuesta = await fetch("https://la-caracola-dice.onrender.com/elegir", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ palabras })
+        });
+
+        if (!respuesta.ok) {
+          resultadoDiv.textContent = "Error al contactar la API.";
+          return;
+        }
+
+        const data = await respuesta.json();
+        resultadoDiv.textContent = `Palabra elegida: ${data.palabra_elegida}`;
+      } catch (error) {
+        resultadoDiv.textContent = "Error al enviar datos.";
+      }
+    }
+  </script>
+
+</body>
+</html>
