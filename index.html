@@ -98,7 +98,7 @@
 
       if (response.ok) {
         const data = await response.json();
-        document.getElementById("resultado").innerText = "La caracola dice:" + data.palabra_elegida;
+        document.getElementById("resultado").innerText = "La caracola dice...  " + data.palabra_elegida;
       } else {
         document.getElementById("resultado").innerText = "Error al consultar a la Caracola.";
       }
