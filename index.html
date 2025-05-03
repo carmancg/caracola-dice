@@ -25,9 +25,9 @@
 </head>
 <body>
 
-  <h2>Pregúntale a la caracola</h2>
+  <h2>La caracola mágica</h2>
   <input type="text" id="entrada" placeholder="Ej: garnachas, pizza, buffet">
-  <button onclick="enviar()">La caracola dice</button>
+  <button onclick="enviar()">¿Qué debemos elegir, caracola?</button>
 
   <div id="resultado"></div>
 
@@ -55,7 +55,7 @@
         }
 
         const data = await respuesta.json();
-        resultadoDiv.textContent = `Palabra elegida: ${data.palabra_elegida}`;
+        resultadoDiv.textContent = `La caracola dice: ${data.palabra_elegida}`;
       } catch (error) {
         resultadoDiv.textContent = "Error al enviar datos.";
       }
