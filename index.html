@@ -71,10 +71,11 @@
 <body>
   <div class="contenedor">
     <h1>La Caracola Mágica</h1>
-    <p>Escribe varias palabras separadas por coma y pregunta a la Caracola 🐚</p>
+    <p>¿Indeciso? Escribe la opciones y</p>
+    <p>¡pregúntale a la caracola!</p>
     <input type="text" id="entrada" placeholder="ej: sí, no, tal vez" />
     <br />
-    <button onclick="consultar()">Preguntar</button>
+    <button onclick="consultar()">¡Caracola, ayúdanos a elegir!</button>
     <div id="resultado"></div>
   </div>
 
@@ -88,7 +89,7 @@
         return;
       }
 
-      const response = await fetch("https://TU-URL-RENDER/elegir", {
+      const response = await fetch("https://https://la-caracola-dice.onrender.com/elegir", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ palabras })
