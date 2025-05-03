@@ -72,8 +72,7 @@
   <div class="contenedor">
     <h1>La Caracola Mágica</h1>
     <p>¿No sabes qué decidir? </p>
-    <p>Escribe tus opciones,</p>
-    <p>separadas con coma,</p>
+    <p>Escribe tus opciones separadas con coma,</p>
     <p>y ¡pregúntale a la caracola!</p>
     <input type="text" id="entrada" placeholder="ej: sí, no, tal vez" />
     <br />
@@ -99,7 +98,7 @@
 
       if (response.ok) {
         const data = await response.json();
-        document.getElementById("resultado").innerText = "🔮 " + data.palabra_elegida;
+        document.getElementById("resultado").innerText = "La caracola dice:" + data.palabra_elegida;
       } else {
         document.getElementById("resultado").innerText = "Error al consultar a la Caracola.";
       }
