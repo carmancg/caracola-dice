@@ -70,13 +70,13 @@
 </head>
 <body>
   <div class="contenedor">
-    <h1>La Caracola Mágica</h1>
-    <p>¿No sabes qué decidir? </p>
+    <h1>La Caracola Magica</h1>
+    <p>No te decides? </p>
     <p>Escribe tus opciones separadas con coma,</p>
-    <p>y ¡pregúntale a la caracola!</p>
+    <p>y preguntale a la caracola!</p>
     <input type="text" id="entrada" placeholder="ej: pizza, tacos, hamburguesas" />
     <br />
-    <button onclick="consultar()">¡Caracola, ayúdanos a elegir!</button>
+    <button onclick="consultar()">Caracola, ayudanos a elegir!</button>
     <div id="resultado"></div>
   </div>
 
@@ -86,7 +86,7 @@
       const palabras = entrada.split(",").map(p => p.trim()).filter(Boolean);
 
       if (palabras.length < 2) {
-        document.getElementById("resultado").innerText = "¡Escribe al menos dos opciones!";
+        document.getElementById("resultado").innerText = "Escribe al menos dos opciones!";
         return;
       }
 
@@ -98,7 +98,7 @@
 
       if (response.ok) {
         const data = await response.json();
-        document.getElementById("resultado").innerText = "La caracola dice...  " + data.palabra_elegida;
+        document.getElementById("resultado").innerText = "La caracola dice...  " + data.palabra_elegida + "!";
       } else {
         document.getElementById("resultado").innerText = "Error al consultar a la Caracola.";
       }
